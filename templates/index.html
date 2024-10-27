@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Comp Sci IA | Karan Singh</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img class="navbar-brand" id="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                <a class="navbar-brand" href="#">University Fairs</a>
+            </div>
+            <ul class="nav navbar-nav">
+                {% if 'username' in session %}
+                    <li>
+                        <input id="welcome-text" type="text" class="form-control" value="Welcome {{ session['username'] }}" disabled>
+                    </li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="body">
+        <h1>Browse Events</h1>
+        {% if error %}
+            <div class="modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Registration Successful</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>We have sent you a confirmation email.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <div id="filter">
+            <form action="/" method="POST">
+                <div class="row">
+                    <div class="col-12 col-lg-3 col-md-4 col-sm-6">
+                        <label for="datetime">Select Month & Year</label>
+                        <input id="datetime" name="datetime" type="month" class="form-control" placeholder="">
+                    </div>
+                    <div class="col-12 col-lg-3 col-md-4 col-sm-6">
+                        <label for="price">Price</label>
+                        <select id="price" name="price" class="form-control">
+                            <option value="Please select">Please select</option>
+                            <option value="Free">Free</option>
+                            <option value="Paid">Paid</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-lg-3 col-md-4 col-sm-6">
+                        <label for="mode">Mode</label>
+                        <select id="mode" name="mode" class="form-control">
+                            <option value="Please select">Please select</option>
+                            <option value="Virtual">Virtual</option>
+                            <option value="Face-to-Face">Face-to-Face</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-lg-3 col-md-4 col-sm-6">
+                        <label for="destination">Destination Country</label>
+                        <select id="destination" name="destination" class="form-control">
+                            <option value="Please select">Please select</option>
+                            <option value="Asia">Asia</option>
+                            <option value="Australia">Australia</option>
+                            <option value="Europe">Europe</option>
+                            <option value="UK">UK</option>
+                            <option value="US">US</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Filter</button>
+            </form>
+        </div>
+        {% if events %}
+            <br>
+            <h4 id="results"><span id="results-count">{{ events_count }}</span> results found</h4>
+            <div class="row">
+                {% for event in events %}
+                    <div class="col-12 col-lg-3 col-md-4 col-sm-6">
+                        <img src="{{ event.get('image_url', '-') }}" alt="{{ event.get('name', '-') }}">
+                    </div>
+                    <div class="col-12 col-lg-9 col-md-8 col-sm-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4 class="card-title">{{ event.get('name', '-') }}</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text"><strong>Summary:</strong> {{ event.get('summary', '-') }}</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item"><strong>Start Date & Time:</strong> {{ event.get('start_datetime', '-') }}</li>
+                                    <li class="list-group-item"><strong>End Date & Time:</strong> {{ event.get('end_datetime', '-') }}</li>
+                                    <li class="list-group-item"><strong>Mode:</strong> {{ event.get('mode', '-') }}</li>
+                                    <li class="list-group-item"><strong>Location:</strong> {{ event.get('location', '-') }}</li>
+                                    <li class="list-group-item"><strong>Price:</strong> S$ {{ event.get('price', '-') }} ({{ event.get('fees_type', '-') }})</li>
+                                </ul>
+                                {% if 'username' in session %}
+                                    <a href="{{ event.get('details_url', '-') }}" target="_blank" class="btn btn-primary">Know More</a>
+                                {% else %}
+                                    <a href="{{ url_for('login') }}" target="_blank" class="btn btn-primary">Know More</a>
+                                {% endif %}
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">Organized by <b>{{ event.get('organizer', '-') }}</b></small>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
