@@ -110,9 +110,9 @@
                                     <li class="list-group-item"><strong>Price:</strong> S$ {{ event.get('price', '-') }} ({{ event.get('fees_type', '-') }})</li>
                                 </ul>
                                 {% if 'username' in session %}
-                                    <a href="{{ event.get('details_url', '-') }}" target="_blank" class="btn btn-primary">Know More</a>
+                                    <a href="{{ event.get('details_url', '-') }}" class="btn btn-primary">Know More</a>
                                 {% else %}
-                                    <a href="{{ url_for('login') }}" target="_blank" class="btn btn-primary">Know More</a>
+                                    <a href="{{ url_for('login') }}" class="btn btn-primary">Know More</a>
                                 {% endif %}
                             </div>
                             <div class="card-footer">
