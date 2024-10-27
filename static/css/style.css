@@ -1,0 +1,84 @@
+.body {
+    padding: 10px 20px;
+}
+
+#filter, #register, #login {
+    background-color: #dedede;
+    padding: 10px 20px;
+}
+
+#logo {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+.navbar-header {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.container-fluid {
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+
+.form-control {
+    margin-bottom: 20px;
+}
+
+label {
+    margin-top: 5px;
+}
+
+button[type="submit"] {
+    margin-bottom: 5px
+}
+
+#results {
+    font-weight: 500;
+}
+
+#results-count {
+    font-weight: bold;
+    color: #777;
+}
+
+strong {
+    color: #777;
+}
+
+.card-title {
+    font-weight: bold;
+    color: #777;
+}
+
+.card {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.card-body {
+    padding: 10px 20px;
+}
+
+.card-header, .card-footer {
+    background-color: #dedede;
+    padding: 10px 20px;
+}
+
+.error-text {
+    color: red;
+}
+
+#welcome-text {
+    margin-bottom: 0px;
+    margin-top: 8px;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    height: 200px;
+}
