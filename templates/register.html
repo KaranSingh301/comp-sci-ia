@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Comp Sci IA | Karan Singh</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img class="navbar-brand" id="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                <a class="navbar-brand" href="/">University Fairs</a>
+            </div>
+            <ul class="nav navbar-nav">
+                {% if 'username' in session %}
+                    <li>
+                        <input id="welcome-text" type="text" class="form-control" value="Welcome {{ session['username'] }}" disabled>
+                        </form>
+                    </li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="#">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="body">
+        <h1>Register</h1>
+        {% if error == "Not Registered" %}
+            <p><strong><span class="error-text">You are not registered.</span> Please proceed to register with your full name and email.</strong></p>
+        {% else %}
+            <p><strong>Are you a new user? Please proceed to register with your full name and email.</strong></p>
+        {% endif %}
+        <div id="register">
+            <form action="/register" method="POST">
+                <div class="row">
+                    {% if error == "Registered" %}
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <label for="fullname">Full Name</label>
+                            <input id="fullname" name="fullname" type="text" class="form-control" placeholder="Enter your full name" value="{{ fullname if fullname else '' }}" required>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" class="form-control" placeholder="Enter your email" value="{{ email if email else '' }}" required>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <label for="password">Password</label>
+                            <input id="password" name="password" type="text" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                    {% else %}
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <label for="fullname">Full Name</label>
+                            <input id="fullname" name="fullname" type="text" class="form-control" placeholder="Enter your full name" required>
+                        </div>
+                        <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                            <label for="email">Email</label>
+                            <input id="email" name="email" type="email" class="form-control" placeholder="Enter your email" required>
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn btn-success">Register</button>
+            </form>
+        </div>
+        <br>
+        <p><strong>Are you an existing user? <a class="btn btn-primary" href="{{ url_for('login') }}">Login</a></strong></p>
+    </div>
+</body>
+</html>

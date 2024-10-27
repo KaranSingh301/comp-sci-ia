@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Comp Sci IA | Karan Singh</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <img class="navbar-brand" id="logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+                <a class="navbar-brand" href="/">University Fairs</a>
+            </div>
+            <ul class="nav navbar-nav">
+                {% if 'username' in session %}
+                    <li>
+                        <input id="welcome-text" type="text" class="form-control" value="Welcome {{ session['username'] }}" disabled>
+                    </li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="#">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="body">
+        <h1>Login</h1>
+        {% if error == "Already Registered" %}
+            <p><strong><span class="error-text">You are already registered.</span> Please proceed to login with your email and password.</strong></p>
+        {% elif error == "Incorrect Password" %}
+            <p><strong><span class="error-text">You have entered an incorrect password.</span> Please try again.</strong></p>
+        {% else %}
+            <p><strong>Are you an existing user? Please proceed to login with your email and password.</strong></p>
+        {% endif %}
+        <div id="login">
+            <form action="/login" method="POST">
+                <div class="row">
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                        <label for="email">Email</label>
+                        <input id="email" name="email" type="email" class="form-control" placeholder="Enter your email" required>
+                    </div>
+                    <div class="col-12 col-lg-6 col-md-6 col-sm-12">
+                        <label for="password">Password</label>
+                        <input id="password" name="password" type="password" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Login</button>
+            </form>
+        </div>
+        <br>
+        <p><strong>Are you a new user? <a class="btn btn-primary" href="{{ url_for('register') }}">Register</a></strong></p>
+    </div>
+</body>
+</html>
